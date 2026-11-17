@@ -1,0 +1,1 @@
+{"name": "kinerja-ui", "version": "0.1.0", "description": "Sistem penilaian kinerja karyawan — prototype frontend", "private": true, "scripts": {"start": "python -m http.server 8000 --directory .", "lint": "eslint ."}, "devDependencies": {"eslint": "^9.0.0"}}

@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kinerja — Ringkasan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-frame">
+    <header class="topbar">
+      <div class="brand-area">
+        <div class="logo-mark">K</div>
+        <span class="brand-name">Kinerja</span>
+      </div>
+      <nav class="primary-nav">
+        <button class="pill active">Ringkasan</button>
+        <button class="pill" data-page="assessments">Penilaian</button>
+        <button class="pill" data-page="employees">Karyawan</button>
+        <button class="pill" data-page="reports">Laporan</button>
+        <button class="pill" data-page="period">Periode</button>
+        <button class="pill" data-page="templates">Template</button>
+      </nav>
+      <div class="topbar-right">
+        <button class="icon-btn" aria-label="Pencarian" title="Cari">⌕</button>
+        <button class="icon-btn notify-btn" aria-label="Notifikasi" title="Notifikasi"><span>♢</span><i></i></button>
+        <button class="profile-pill" type="button">
+          <span class="avatar sm">EA</span>
+          <div class="profile-text"><b>Enami Asa</b><small>HR Administrator</small></div>
+          <span class="chevron-down">⌄</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="page-body">
+      <section class="hero">
+        <div class="greeting-group">
+          <div class="kicker">Tahun penilaian 2026</div>
+          <h1>Selamat pagi, Andi.</h1>
+          <p>Pantau tugas penilaian, lihat progres tim, dan kelola periode tahunan di Nusantara Solusi.</p>
+        </div>
+        <div class="hero-actions">
+          <button class="btn btn-dark" data-action="toast">Buat periode baru</button>
+          <button class="btn btn-ghost" data-action="open-assessments">Buka Penilaian</button>
+        </div>
+      </section>
+
+      <section class="stats-grid">
+        <div class="card stat-hero">
+          <div class="stat-hero-top">
+            <span class="label">Total Karyawan</span>
+            <span class="badge up">↑ 12 dari tahun lalu</span>
+          </div>
+          <div class="value large">248</div>
+          <div class="progress-slim"><div class="bar-fill wide" style="width:68%"></div></div>
+          <div class="footnote">68% penilaian selesai pada periode berjalan</div>
+        </div>
+
+        <div class="card stat-accent">
+          <div class="stat-header"><span class="label">Penilaian Selesai</span><span class="muted-count">168 / 248</span></div>
+          <div class="value big">168</div>
+          <div class="delta up">↑ 12 orang lebih banyak dari bulan lalu</div>
+        </div>
+
+        <div class="card stat-ghost">
+          <div class="stat-header"><span class="label">Rata-rata Nilai</span></div>
+          <div class="value big">3,84</div>
+          <div class="delta up">↑ 0,16 dari tahun sebelumnya</div>
+        </div>
+
+        <div class="card stat-warn">
+          <div class="stat-header"><span class="label">Perlu Perhatian</span></div>
+          <div class="value big">24</div>
+          <div class="delta warn">9,7% belum menyelesaikan penilaian</div>
+        </div>
+
+        <div class="card tasks-card">
+          <div class="card-header"><b>Tugas mendesak</b><button class="text-link" data-action="open-assessments">Semua →</button></div>
+          <ul class="task-list">
+            <li><div class="dot warn"></div><div><b>Tim Operasional</b><small>14 dari 32 karyawan belum selesai</small></div></li>
+            <li><div class="dot neutral"></div><div><b>Deadline atasan</b><small>Berakhir 30 November 2026</small></div></li>
+            <li><div class="dot up"></div><div><b>Review HR ready</b><small>8 penilaian menunggu pemeriksaan</small></div></li>
+          </ul>
+        </div>
+
+        <div class="card chart-card">
+          <div class="card-header"><b>Rata-rata per divisi</b><select class="select-mini"><option>2026 vs 2025</option><option>2025 saja</option></select></div>
+          <div class="chart-wrap">
+            <div class="chart-shell">
+              <svg viewBox="0 0 500 140" preserveAspectRatio="none" aria-label="Grafik tren nilai">
+                <path d="M0,84 C45,80 60,82 95,70 S165,60 200,66 S260,44 300,50 S370,34 410,38 S460,26 500,20" fill="none" stroke="#FF6A00" stroke-width="3"/>
+                <path d="M0,112 C45,108 60,108 95,100 S165,96 200,100 S260,88 300,92 S370,82 410,84 S460,74 500,70" fill="none" stroke="#CBD5E1" stroke-width="2.5" stroke-dasharray="5 4"/>
+                <circle cx="500" cy="20" r="4" fill="#FF6A00"/>
+              </svg>
+            </div>
+            <div class="chart-x-axis">
+              <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>Mei</span><span>Jun</span><span>Jul</span><span>Agu</span><span>Sep</span><span>Okt</span><span>Nov</span><span>Des</span>
+            </div>
+          </div>
+          <div class="chart-legend"><span class="legend-dot orange"></span>2026 &nbsp;&nbsp; <span class="legend-dot gray"></span>2025</div>
+        </div>
+
+        <div class="card mini-bar-chart">
+          <div class="card-header"><b>Distribusi kategori</b><button class="text-link">Detail →</button></div>
+          <div class="bar-row"><div class="segment orange" style="width:28%"></div><div class="segment teal" style="width:42%"></div><div class="segment slate" style="width:20%"></div><div class="segment gray" style="width:10%"></div></div>
+          <div class="mini-legend"><span><span class="dot orange"></span>Sangat baik 28%</span><span><span class="dot teal"></span>Baik 42%</span><span><span class="dot slate"></span>Cukup 20%</span><span><span class="dot gray"></span>Kurang 10%</span></div>
+        </div>
+
+        <div class="card activity-card">
+          <div class="card-header"><b>Aktivitas terbaru</b><input class="search-box" placeholder="Cari aktivitas..." /></div>
+          <table class="recent-table">
+            <thead><tr><th>Nama</th><th>Aktivitas</th><th>Status</th><th>Waktu</th></tr></thead>
+            <tbody>
+              <tr><td class="name">Dimas Pratama</td><td>Menyelesaikan penilaian mandiri</td><td><span class="pill-status done">Selesai</span></td><td class="muted">Hari ini, 09:14</td></tr>
+              <tr><td class="name">Maya Sari</td><td>Mulai penilaian oleh project manager</td><td><span class="pill-status pending">Berjalan</span></td><td class="muted">Hari ini, 08:52</td></tr>
+              <tr><td class="name">Reza Firmansyah</td><td>Pengajuan review oleh Kepala Divisi</td><td><span class="pill-status review">Review</span></td><td class="muted">Kemarin, 17:30</td></tr>
+              <tr><td class="name">Siti Nurhaliza</td><td>Hasil dipublikasikan</td><td><span class="pill-status published">Dipublikasi</span></td><td class="muted">15 Nov 2026</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status">Pesan berhasil disimpan</div>
+  <script src="app.js"></script>
+</body>
+</html>

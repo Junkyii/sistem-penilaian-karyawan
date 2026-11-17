@@ -1,0 +1,33 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+venv/
+.env
+*.log
+
+# Node (jika ada package.json nanti)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docs & build output
+/docs/generate_prd_pdf.py
+/pdf/
+
+# System
+.claude/
+.plan/
+opencode_session_*.md
