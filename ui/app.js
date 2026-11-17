@@ -1,6 +1,8 @@
 const toast = document.querySelector('#toast');
 const pageBody = document.querySelector('.page-body');
 const navButtons = [...document.querySelectorAll('.pill')];
+const dashboardMarkup = pageBody.innerHTML;
+function esc(v) { return String(v ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
 const state = {
   page: 'dashboard',
   employees: [
@@ -28,23 +30,24 @@ function showToast(message) {
   showToast.timer = window.setTimeout(() => toast.classList.remove('show'), 2300);
 }
 function statusClass(status) {
-  if (['Selesai', 'Aktif', 'Disetujui'].includes(status)) return 'done';
-  if (['Berjalan', 'Draft', 'Menunggu review'].includes(status)) return 'pending';
+  const value = typeof status === 'string' ? status.trim() : '';
+  if (['Selesai', 'Aktif', 'Disetujui'].includes(value)) return 'done';
+  if (['Berjalan', 'Draft', 'Menunggu review'].includes(value)) return 'pending';
   return 'review';
 }
 function pageHeader(kicker, title, description, action = '', actionType = 'toast') {
-  return `<section class="inner-page-head"><div><div class="kicker">${kicker}</div><h1>${title}</h1><p>${description}</p></div>${action ? `<button class="btn btn-dark" data-action="${actionType}">${action}</button>` : ''}</section>`;
+  return `<section class="inner-page-head"><div><div class="kicker">${esc(kicker)}</div><h1>${esc(title)}</h1><p>${esc(description)}</p></div>${action ? `<button class="btn btn-dark" data-action="${esc(actionType)}" type="button">${esc(action)}</button>` : ''}</section>`;
 }
 function panel(title, subtitle, body, extra = '') {
-  return `<section class="card full-panel"><div class="card-header"><div><b>${title}</b>${subtitle ? `<small class="panel-subtitle">${subtitle}</small>` : ''}</div>${extra}</div>${body}</section>`;
+  return `<section class="card full-panel"><div class="card-header"><div><b>${esc(title)}</b>${subtitle ? `<small class="panel-subtitle">${esc(subtitle)}</small>` : ''}</div>${extra}</div>${body}</section>`;
 }
 function table(headers, rows, empty = 'Belum ada data') {
-  return `<div class="table-scroll"><table class="data-table"><thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.length ? rows.map(row => `<tr>${row.map((cell, i) => `<td class="${i === 0 ? 'name' : ''}">${cell}</td>`).join('')}</tr>`).join('') : `<tr><td colspan="${headers.length}" class="empty-row">${empty}</td></tr>`}</tbody></table></div>`;
+  return `<div class="table-scroll"><table class="data-table"><thead><tr>${headers.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${rows.length ? rows.map(row => `<tr>${row.map((cell, i) => `<td class="${i === 0 ? 'name' : ''}">${typeof cell === 'string' ? esc(cell) : cell}</td>`).join('')}</tr>`).join('') : `<tr><td colspan="${headers.length}" class="empty-row">${esc(empty)}</td></tr>`}</tbody></table></div>`;
 }
-function statusPill(status) { return `<span class="pill-status ${statusClass(status)}">${status}</span>`; }
+function statusPill(status) { return `<span class="pill-status ${statusClass(status)}">${esc(String(status ?? ''))}</span>`; }
 
 function dashboardView() {
-  return document.querySelector('.page-body').innerHTML;
+  return dashboardMarkup;
 }
 function assessmentsView() {
   const rows = state.assessments.map(a => [a.name, a.division, a.evaluator, statusPill(a.status), a.score, `<button class="row-action" data-action="detail">Detail</button>`]);
@@ -64,32 +67,43 @@ function templatesView() {
   return pageHeader('Konfigurasi', 'Template indikator', 'Susun indikator, kategori, dan bobot penilaian.', 'Buat template', 'new-template') + panel('Template penilaian', 'Total bobot setiap template wajib 100%.', table(['Nama template', 'Indikator', 'Kategori', 'Bobot', 'Status', ''], [['Template umum perusahaan','12 indikator','KPI, kompetensi, perilaku','100%','Aktif','<button class="row-action" data-action="detail">Kelola</button>'],['Template manajerial','16 indikator','KPI, kepemimpinan','100%','Draft','<button class="row-action" data-action="detail">Lanjutkan</button>']]));
 }
 function settingsView() {
-  return pageHeader('Workspace', 'Pengaturan', 'Kelola preferensi perusahaan, akses, dan pengiriman email.', 'Simpan perubahan', 'save') + `<div class="settings-grid"><div class="card settings-card"><h2>Notifikasi email</h2><p>Email otomatis membantu setiap orang mengikuti deadline penilaian.</p><label class="switch-row"><span>Pengingat deadline</span><input type="checkbox" checked /><i></i></label><label class="switch-row"><span>Email hasil publikasi</span><input type="checkbox" checked /><i></i></label><label class="switch-row"><span>Ringkasan mingguan HR</span><input type="checkbox" checked /><i></i></label></div><div class="card settings-card"><h2>Aturan penilaian</h2><p>Aturan ini diterapkan pada periode baru.</p><div class="setting-field"><label>Skala nilai</label><input value="1 – 5" readonly /></div><div class="setting-field"><label>Pembulatan nilai</label><select><option>Dua angka desimal</option></select></div><div class="setting-field"><label>Penilaian mandiri</label><select><option>Opsional</option></select></div></div></div>`;
+  return pageHeader('Workspace', 'Pengaturan', 'Kelola preferensi perusahaan, akses, dan pengiriman email.', 'Simpan perubahan', 'save') + `<div class="settings-grid"><div class="card settings-card"><h2>Notifikasi email</h2><p>Email otomatis membantu setiap orang mengikuti deadline penilaian.</p><label class="switch-row"><span>Pengingat deadline</span><label class="switch"><input type="checkbox" checked /><i></i></label></label><label class="switch-row"><span>Email hasil publikasi</span><label class="switch"><input type="checkbox" checked /><i></i></label></label><label class="switch-row"><span>Ringkasan mingguan HR</span><label class="switch"><input type="checkbox" checked /><i></i></label></label></div><div class="card settings-card"><h2>Aturan penilaian</h2><p>Aturan ini diterapkan pada periode baru.</p><div class="setting-field"><label>Skala nilai</label><input value="1 – 5" readonly /></div><div class="setting-field"><label>Pembulatan nilai</label><select><option>Dua angka desimal</option></select></div><div class="setting-field"><label>Penilaian mandiri</label><select><option>Opsional</option></select></div></div></div>`;
 }
 
 function render(page = 'dashboard') {
   state.page = page;
   navButtons.forEach(button => button.classList.toggle('active', (button.dataset.page || 'dashboard') === page));
   if (page === 'dashboard') {
+    pageBody.innerHTML = dashboardMarkup;
     location.hash = '';
-    window.location.reload();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     return;
   }
   const views = { assessments: assessmentsView, employees: employeesView, reports: reportsView, period: periodView, templates: templatesView, settings: settingsView };
-  pageBody.innerHTML = views[page] ? views[page]() : dashboardView();
+  pageBody.innerHTML = views[page] ? views[page]() : document.querySelector('.bg-frame').innerHTML;
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 function openModal(type) {
   const config = {
-    'new-employee': ['Tambah karyawan', 'Masukkan data dasar karyawan baru.', ['Nama lengkap', 'Email kerja', 'Jabatan', 'Divisi']],
+    'new-employee': ['Tambah karyawan', 'Masukkan data dasar karyawan baru.', ['Nama lengkap', 'Email kerja', 'Jabatan', 'Divisi'], (values, row) => state.employees.push({ name: values[0], role: values[2] || '', division: values[3] || '', score: '—', status: 'Draft' })],
     'new-period': ['Buat periode tahunan', 'Tentukan jadwal penilaian untuk satu tahun.', ['Nama periode', 'Tahun', 'Deadline penilai', 'Tanggal publikasi']],
     'new-template': ['Buat template indikator', 'Mulai dengan template baru untuk penilaian.', ['Nama template', 'Deskripsi']],
     'new-assignment': ['Buat penugasan', 'Tentukan peserta dan beberapa penilai.', ['Karyawan', 'Penilai utama', 'Bobot penilai']]
   }[type];
   if (!config) return showToast('Data berhasil disimpan');
+  function closeModal() { document.querySelector('.modal-backdrop')?.remove(); }
   const modal = document.createElement('div'); modal.className = 'modal-backdrop';
-  modal.innerHTML = `<div class="modal" role="dialog" aria-modal="true"><button class="modal-close" data-action="close-modal">×</button><div class="kicker">Form baru</div><h2>${config[0]}</h2><p>${config[1]}</p><form>${config[2].map(label => `<label>${label}<input required placeholder="Masukkan ${label.toLowerCase()}" /></label>`).join('')}<div class="modal-actions"><button type="button" class="btn btn-ghost" data-action="close-modal">Batal</button><button class="btn btn-dark" type="submit">Simpan</button></div></form></div>`;
+  modal.innerHTML = `<div class="modal" role="dialog" aria-modal="true"><button class="modal-close" type="button" data-action="close-modal">×</button><div class="kicker">Form baru</div><h2>${config[0]}</h2><p>${config[1]}</p><form><input type="hidden" value="${type}">${config[2].map(label => `<label>${label}<input required placeholder="Masukkan ${label.toLowerCase()}" /></label>`).join('')}<div class="modal-actions"><button type="button" class="btn btn-ghost" data-action="close-modal">Batal</button><button class="btn btn-dark" type="submit">Simpan</button></div></form></div>`;
   document.body.appendChild(modal);
+  modal.addEventListener('click', event => { if (event.target === modal) closeModal(); });
+  modal.querySelector('form').addEventListener('submit', event => {
+    event.preventDefault();
+    const inputs = [...modal.querySelectorAll('input:not([type="hidden"])')];
+    const values = inputs.map(input => input.value.trim());
+    if (typeof config[3] === 'function') config[3](values, values.join(', '));
+    closeModal();
+    showToast('Data berhasil ditambahkan');
+  });
 }
 
 document.addEventListener('click', event => {
@@ -106,10 +120,9 @@ document.addEventListener('click', event => {
   else if (type === 'detail') showToast('Detail akan dibuka');
   else if (type === 'save' || type === 'toast') showToast('Perubahan berhasil disimpan');
 });
-document.addEventListener('submit', event => { if (event.target.closest('.modal')) { event.preventDefault(); event.target.closest('.modal-backdrop').remove(); showToast('Data berhasil ditambahkan'); } });
 document.addEventListener('input', event => {
   const input = event.target.closest('[data-filter]');
-  if (!input) return;
+  if (!input || input.type === 'search') return;
   const query = input.value.toLowerCase();
   const rows = event.target.closest('.full-panel')?.querySelectorAll('tbody tr') || [];
   rows.forEach(row => row.style.display = row.textContent.toLowerCase().includes(query) ? '' : 'none');
